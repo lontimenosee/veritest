@@ -2,10 +2,12 @@ module SEQUENTIALDETECTOR(
     input clk,
     input rst_n,
     input seq,
-    output valid
+    output reg valid
 );
 
-localparam [2:0] state;
+
+// 参数需要初始化
+localparam [2:0] state = 3'd0;
 localparam IDLE = 3'd0;
 localparam C1 = 3'd1;
 localparam C2 = 3'd2;
@@ -26,10 +28,11 @@ always @(posedge clk or negedge rst_n) begin
     end
 end
 
+// case对应endcase
 always @(*) begin
 
     next_state = IDLE;
-    case(current_state)
+    case(current_state) 
     IDLE: begin
         next_state = (seq == 1'b1)? C1:IDLE;
     end
@@ -57,7 +60,7 @@ always @(*) begin
     default: begin
         next_state = IDLE;
     end
-        
+    endcase        
 end
 
 always @(posedge clk or negedge rst_n) begin
