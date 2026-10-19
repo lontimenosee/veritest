@@ -26,7 +26,7 @@
 - vlog yourfile.v
 - vlog tb_yourfile.v
 
-- vsim work.tb_module （注意要使用模块名）
+- vsim -voptargs=+acc work.tb_module （注意要使用模块名，切记添加中间的命令，不然没波形）
 
 - add wave -r /*
 - run -all
