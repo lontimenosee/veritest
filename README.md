@@ -6,13 +6,16 @@
 
 遇到的报错
 
-### commit1
+#### commit1
 
 - 没有给case放endcase
 - 没有给输入输出列表定reg和wire（默认wire可以，但是reg要声明，尤其在输出时）
 - localparam 需要定义时赋默认值
 
+### 边沿检测
+#### commit 7523470de0883f6abd56bc4835568d89b667763e
 
+- 没有给tb文件加timescale
 
 ## 仿真操作
 
