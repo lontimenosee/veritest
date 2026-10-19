@@ -1,3 +1,4 @@
+`timescale 1ns/10ps
 module SEQUENTIALDETECTOR(
     input clk,
     input rst_n,
@@ -21,7 +22,6 @@ reg [3:0]next_state;
 always @(posedge clk or negedge rst_n) begin
     if(!rst_n) begin
         current_state <= IDLE;
-        next_state <= IDLE;
     end
     else begin
     current_state <= next_state;
@@ -46,7 +46,7 @@ always @(*) begin
     end
 
     C3:  begin
-        next_state = (seq == 1'b1)? C4:C3;
+        next_state = (seq == 1'b1)? C4:IDLE;
     end
 
     C4:  begin
@@ -54,7 +54,7 @@ always @(*) begin
     end
 
     C5:  begin
-        next_state = (seq == 1'b1)? C1:IDLE;
+        next_state = (seq == 1'b1)? C1:C2;
     end
 
     default: begin
@@ -68,10 +68,13 @@ always @(posedge clk or negedge rst_n) begin
         valid <= 1'b0;
     end
     else begin
-        if((current_state == C5) && (seq == 1'b0)) begin
+        
+        if(current_state == C5) begin
             valid <= 1'b1;
         end
-        valid <= 1'b0;
+        else begin
+            valid <= 1'b0;
+        end
     end
 end
 

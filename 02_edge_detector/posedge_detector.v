@@ -1,3 +1,4 @@
+`timescale 1ns/10ps
 module posedge_detector (
     input wire clk,
     input wire rst_n,

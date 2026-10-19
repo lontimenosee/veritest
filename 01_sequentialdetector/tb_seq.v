@@ -1,3 +1,4 @@
+`timescale 1ns/10ps
 module TB_SEQ();
 
 reg clk;
@@ -32,6 +33,7 @@ initial begin
     #20 seq = 1'b1;
     #20 seq = 1'b1;
     #20 seq = 1'b0;
+    $finish;
 end
 
 SEQUENTIALDETECTOR U_SEQ(
