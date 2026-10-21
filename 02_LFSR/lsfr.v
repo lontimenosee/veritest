@@ -1,25 +1,33 @@
-`ifndef LSFR_V
-`define LSFR_V
 
-module LSFR
+`ifndef LFSR_V
+`define LFSR_V
+
+module LFSR
    (
-   input                                         clk,                          // Clock
-   input                                         rst_n,                        // Active-low asynchronous reset
-   output reg                                    lfsr_out                      // LFSR output
+   input  wire                                  clk,       // Clock
+   input  wire                                  rst_n,     // Active-low asynchronous reset
+   output wire                                  lfsr_out  // LFSR serial output
    );
 
-wire [7:0]lfsr_out;
+reg  [7:0] lfsr_reg;
+wire [7:0] lfsr_shifter;
 
-assign lfsr_out = (lfsr_out >> 1) ^ (lfsr_out[0]?8'hB8: 8'h00);
+// Galois LFSR feedback logic
+assign lfsr_shifter = (lfsr_reg >> 1) ^
+                      (lfsr_reg[0] ? 8'hB8 : 8'h00);
 
-always @(posedge clk or negedge rst_n) 
-begin
-    if (!rst_n) begin
-        lfsr_out <= 1'b0;
-    end else begin
-        lfsr_out <= lfsr_out[0];
+// LFSR state register
+always @(posedge clk or negedge rst_n) begin : LFSR_REG_PROC
+    if (rst_n == 1'b0) begin
+        lfsr_reg <= 8'h01;
+    end
+    else begin
+        lfsr_reg <= lfsr_shifter;
     end
 end
+
+// Serial output
+assign lfsr_out = lfsr_reg[0];
 
 endmodule
 
