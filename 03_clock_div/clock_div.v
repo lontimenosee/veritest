@@ -7,7 +7,7 @@ module CLOCK_DIV #(
    (
    input  wire                                  clk,       // Clock
    input  wire                                  rst_n,     // Active-low asynchronous reset
-   output wire                                  clk_out    // Divided clock output
+   output wire            [7:0]                 clk_out    // Divided clock output
    );
 
 localparam DIV_ODD = (DIVISOR % 2 == 1);
